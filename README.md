@@ -9,3 +9,4 @@ My goals as a developer are to familiarize myself with:
   - Tailwind CSS
   - TypeScript
   - Component-based UI architecture
+  - Firebase, specifically Firestore
