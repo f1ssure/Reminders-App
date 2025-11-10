@@ -1,5 +1,8 @@
 import InputField from "@components/InputField";
 import Button from "@components/Button";
+import Google from "@components/Button/Google"
+import Facebook from "@components/Button/Facebook"
+import Apple from "@components/Button/Apple"
 
 export default function RegisterPage() {
   return (
@@ -41,14 +44,17 @@ export default function RegisterPage() {
           <div className="flex flex-col gap-3 w-full">
             <Button 
               text="Continue with Google" 
+              Icon={Google()}
               //onClick={() => console.log("Google.")}
             />
             <Button 
               text="Continue with Facebook" 
+              Icon={Facebook()}
               //onClick={() => console.log("Facebook.")}
             />
             <Button 
               text="Continue with Apple" 
+              Icon={Apple()}
               //onClick={() => console.log("Apple.")}
             />
           </div>
