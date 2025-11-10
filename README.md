@@ -10,3 +10,4 @@ My goals as a developer are to familiarize myself with:
   - TypeScript
   - Component-based UI architecture
   - Firebase, specifically Firestore
+  - Databases
