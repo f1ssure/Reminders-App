@@ -28,3 +28,7 @@ const auth = getAuth(app);
 
 export { db, auth };
 
+//export * from "./auth/EmailAndPassword";
+//export * from "./auth/Google";
+//export * from "./auth/Facebook";
+//export * from "./auth/Apple";
