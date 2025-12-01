@@ -1,3 +1,9 @@
+import Google from "@components/Button/Google";
+import Facebook from "@components/Button/Facebook";
+import Apple from "@components/Button/Apple";
+
+export { Google, Facebook, Apple };
+
 interface ButtonProps {
   text?: string
   //onClick: Function
