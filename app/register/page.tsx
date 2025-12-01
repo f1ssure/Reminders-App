@@ -8,13 +8,16 @@ import * as Yup from 'yup';
 import { SignUp, SignIn } from '@lib/firebase/auth/EmailAndPassword'
 
 export default function RegisterPage() {
-  // use- formik.resetForm()
+  // TODO:
+  // add UI upon input validation flags
+  // use- formik.resetForm() upon success
+  // make the component dynamic to be able to be reused on /login page
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
-    onSubmit: (values) => SignUp(auth, ...values),
+    onSubmit: (values) => SignUp(values.email, values.password),
     validationSchema: Yup.object({
       email: Yup.string()
         .required('Required')
@@ -69,7 +72,6 @@ export default function RegisterPage() {
             <Button
               text='Create account'
               type='submit'
-              // submit handling
             />
           </form>
 
