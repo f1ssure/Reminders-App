@@ -3,38 +3,17 @@ import InputField from '@components/InputField';
 import Button from '@components/Button';
 import { Google, Facebook, Apple } from '@components/Button';
 import Link from 'next/link';
-import { useFormik } from 'formik';
+import { Formik, FormikProps, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { SignUp, SignIn } from '@lib/firebase/auth/EmailAndPassword'
 
 export default function RegisterPage() {
   // TODO:
-  // add UI upon input validation flags
   // use- formik.resetForm() upon success
   // make the component dynamic to be able to be reused on /login page
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-    },
-    onSubmit: (values) => SignUp(values.email, values.password),
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .required('Required')
-        .email('Invalid email address'),
-      password: Yup.string()
-        .required('Required')
-        .min(8, 'Password should be at least 8 characters long')
-        .matches(/[0-9]/, 'Password must contain a number')
-        .matches(/[a-z]/, 'Password must contain a lowercase letter')
-        .matches(/[A-Z]/, 'Password must contain an uppercase letter')
-        .matches(/[^\w]/, 'Password must contain a symbol')
-    }),
-  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    formik.handleSubmit(e);
   };
 
   return (
@@ -48,32 +27,60 @@ export default function RegisterPage() {
         </div>
 
         <div className='w-full'>
-          <form className='w-full' onSubmit={handleSubmit}>
-            <div className='flex flex-col gap-3 w-full'>
-              <InputField
-                label='Email'
-                name='email'
-                type='text'
-                placeholder='Enter your email address'
-                {...formik.getFieldProps('email')}
-              />
-              <InputField
-                label='Password'
-                name='password'
-                type='password'
-                placeholder='Create a password'
-                {...formik.getFieldProps('password')}
-              />
-            </div>
-            <div className='w-full mt-1.5 mb-8 flex flex-row-reverse'>
-              <Link href='/login' className='font-bold text-xs'>Already have an account?</Link>
-            </div>
+          <Formik
+            initialValues = {{
+              email: '',
+              password: '',
+            }}
+            onSubmit = {(values) => {
+              SignUp(values.email, values.password);
+              // on success, clear the form here!!!!!
+            }}
+            validationSchema = {Yup.object({
+              email: Yup.string()
+                .required('Required')
+                .email('Invalid email address'),
+              password: Yup.string()
+                .required('Required')
+                .min(8, 'Password should be at least 8 characters long')
+                .matches(/[0-9]/, 'Password must contain a number')
+                .matches(/[a-z]/, 'Password must contain a lowercase letter')
+                .matches(/[A-Z]/, 'Password must contain an uppercase letter')
+                .matches(/[^\w]/, 'Password must contain a symbol')
+            })}
+          >
+            {(props: FormikProps<any>) => (
+              <Form className='w-full' onSubmit={handleSubmit}>
+                <div className='flex flex-col gap-5 w-full'>
+                  <Field
+                    className='block w-full mt-1 px-4 py-2 border-[1.5px] border-zinc-800 transition-outline ease-out duration-75 focus:outline-solid outline-sky-950 focus:outline-1 rounded-md'
+                    label='Email'
+                    name='email'
+                    type='text'
+                    placeholder='Enter your email address'
+                    component={InputField}
+                  />
 
-            <Button
-              text='Create account'
-              type='submit'
-            />
-          </form>
+                  <Field
+                    className='block w-full mt-1 px-4 py-2 border-[1.5px] border-zinc-800 transition-outline ease-out duration-75 focus:outline-solid outline-sky-950 focus:outline-1 rounded-md'
+                    label='Password'
+                    name='password'
+                    type='password'
+                    placeholder='Create a password'
+                    component={InputField}
+                  />
+                </div>
+                <div className='w-full mt-2 mb-8 flex flex-row-reverse'>
+                  <Link href='/login' className='font-bold text-xs'>Already have an account?</Link>
+                </div>
+
+                <Button
+                  text='Create account'
+                  type='submit'
+                />
+              </Form>
+            )}
+          </Formik>
 
           <div className='w-full'>
             <div className='w-full my-3 flex items-center'>
